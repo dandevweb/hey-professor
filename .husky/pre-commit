@@ -9,6 +9,12 @@ if [ $? -ne 0 ]; then
   exit 1
 fi;
 
+# Rodar os testes
+php artisan test --parallel
+if [ $? -ne 0 ]; then
+  echo "Opa! Deu ruim com algum teste. Corrija os erros antes de commitar"
+  exit 1
+fi;
 
 # Formatar cada arquivo alterado usando laravel pint
 STAGED_FILES=$(git diff --cached --name-only --diff-filter=ACM | grep ".php\{0,1\}$") || true
