@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\{ProfileController, QuestionController};
+use App\Http\Controllers\{DashboardController, ProfileController, QuestionController};
 
 Route::get('/', function () {
 
@@ -13,9 +13,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', DashboardController::class)->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::post('question', [QuestionController::class, 'store'])->name('question.store');
 
