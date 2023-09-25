@@ -17,6 +17,8 @@ namespace App\Models{
      * @property string $question
      * @property \Illuminate\Support\Carbon|null $created_at
      * @property \Illuminate\Support\Carbon|null $updated_at
+     * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Vote> $votes
+     * @property-read int|null $votes_count
      * @method static \Database\Factories\QuestionFactory factory($count = null, $state = [])
      * @method static \Illuminate\Database\Eloquent\Builder|Question newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder|Question newQuery()
