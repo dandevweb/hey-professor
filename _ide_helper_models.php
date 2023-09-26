@@ -15,6 +15,7 @@ namespace App\Models{
      *
      * @property int $id
      * @property string $question
+     * @property bool $draft
      * @property \Illuminate\Support\Carbon|null $created_at
      * @property \Illuminate\Support\Carbon|null $updated_at
      * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Vote> $votes
@@ -24,6 +25,7 @@ namespace App\Models{
      * @method static \Illuminate\Database\Eloquent\Builder|Question newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder|Question query()
      * @method static \Illuminate\Database\Eloquent\Builder|Question whereCreatedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|Question whereDraft($value)
      * @method static \Illuminate\Database\Eloquent\Builder|Question whereId($value)
      * @method static \Illuminate\Database\Eloquent\Builder|Question whereQuestion($value)
      * @method static \Illuminate\Database\Eloquent\Builder|Question whereUpdatedAt($value)
