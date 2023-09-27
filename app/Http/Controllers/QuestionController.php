@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use Closure;
-use Illuminate\Http\{RedirectResponse, Request};
+use App\Models\Question;
 use Illuminate\View\View;
+use Illuminate\Http\{RedirectResponse};
 
 class QuestionController extends Controller
 {
@@ -35,6 +36,15 @@ class QuestionController extends Controller
                 ...$attributes,
                 'draft' => true,
             ]);
+
+        return back();
+    }
+
+    public function destroy(Question $question): RedirectResponse
+    {
+        $this->authorize('destroy', $question);
+
+        $question->delete();
 
         return back();
     }
