@@ -2,7 +2,7 @@
 
 use App\Models\{Question, User};
 
-use function Pest\Laravel\{actingAs, put};
+use function Pest\Laravel\{actingAs, assertDatabaseCount, assertDatabaseHas, put};
 
 it('should be able  to update a question', function () {
     $user     = User::factory()->create();
@@ -45,4 +45,40 @@ it('should make sure that only person who created the question can update it', f
     actingAs($rightUser);
     put(route('question.update', $question->id), ['question' => 'New Question'])
         ->assertRedirect();
+});
+
+it('should be able to update a question bigger than 255 characters', function () {
+    $user     = User::factory()->create();
+    $question = Question::factory()->for($user, 'createdBy')->create(['draft' => true]);
+    actingAs($user);
+
+    $request = put(route('question.update', $question), [
+        'question' => str_repeat('a', 260) . '?',
+    ]);
+
+    $request->assertRedirect();
+    assertDatabaseCount('questions', 1);
+    assertDatabaseHas('questions', [
+        'question' => str_repeat('a', 260) . '?',
+    ]);
+});
+
+
+it('should have at least 10 characters', function () {
+    $user     = User::factory()->create();
+    $question = Question::factory()->for($user, 'createdBy')->create(['draft' => true]);
+    actingAs($user);
+
+    $request = put(route('question.update', $question), [
+        'question' => str_repeat('a', 8) . '?',
+    ]);
+
+    $request->assertSessionHasErrors([
+        'question' => __('validation.min.string', ['min' => 10, 'attribute' => 'question'])
+    ]);
+
+    assertDatabaseCount('questions', 1);
+    assertDatabaseHas('questions', [
+        'question' => $question->question,
+    ]);
 });
