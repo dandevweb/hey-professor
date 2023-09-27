@@ -5,16 +5,13 @@ use App\Models\User;
 use function Pest\Laravel\{actingAs, assertDatabaseCount, assertDatabaseHas, post};
 
 it('should be able to create a new question bigger than 255 characters', function () {
-    // Arrange :: preparar
     $user = User::factory()->create();
     actingAs($user);
 
-    //Act :: agir
     $request = post(route('question.store'), [
         'question' => str_repeat('a', 260) . '?',
     ]);
 
-    //Assert :: verificar
     $request->assertRedirect();
     assertDatabaseCount('questions', 1);
     assertDatabaseHas('questions', [
@@ -23,16 +20,13 @@ it('should be able to create a new question bigger than 255 characters', functio
 });
 
 it('should create as a draft all the time', function () {
-    // Arrange :: preparar
     $user = User::factory()->create();
     actingAs($user);
 
-    //Act :: agir
     $request = post(route('question.store'), [
         'question' => str_repeat('a', 255) . '?',
     ]);
 
-    //Assert :: verificar
     assertDatabaseHas('questions', [
         'question' => str_repeat('a', 255) . '?',
         'draft'    => true,
@@ -41,16 +35,13 @@ it('should create as a draft all the time', function () {
 
 
 it('should have at least 10 characters', function () {
-    // Arrange :: preparar
     $user = User::factory()->create();
     actingAs($user);
 
-    //Act :: agir
     $request = post(route('question.store'), [
         'question' => str_repeat('a', 8) . '?',
     ]);
 
-    //Assert :: verificar
     $request->assertSessionHasErrors([
         'question' => __('validation.min.string', ['min' => 10, 'attribute' => 'question'])
     ]);
@@ -58,16 +49,13 @@ it('should have at least 10 characters', function () {
 });
 
 it('should check if ends with question mark ?', function () {
-    // Arrange :: preparar
     $user = User::factory()->create();
     actingAs($user);
 
-    //Act :: agir
     $request = post(route('question.store'), [
         'question' => str_repeat('a', 8),
     ]);
 
-    //Assert :: verificar
     $request->assertSessionHasErrors([
         'question' => 'Are you sure that is a question? It missing the question mark in the end.'
     ]);
