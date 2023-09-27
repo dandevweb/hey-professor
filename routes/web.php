@@ -13,11 +13,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', DashboardController::class)->middleware(['auth', 'verified'])->name('dashboard');
 
 
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/dashboard', DashboardController::class)->name('dashboard');
+
     Route::get('question', [QuestionController::class, 'index'])->name('question.index');
     Route::post('question', [QuestionController::class, 'store'])->name('question.store');
     Route::get('question/{question}/edit', [QuestionController::class, 'edit'])->name('question.edit');

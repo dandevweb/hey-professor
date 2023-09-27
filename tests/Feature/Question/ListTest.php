@@ -25,3 +25,15 @@ it('should list all the questions', function () {
         $response->assertSee($q->question);
     }
 });
+
+it('should paginate the result', function () {
+    $user = User::factory()->create();
+    Question::factory()->count(20)->create();
+
+    actingAs($user);
+
+    get(route('dashboard'))
+        ->assertViewHas('questions', function ($value) {
+            return $value instanceof \Illuminate\Pagination\LengthAwarePaginator;
+        });
+});
