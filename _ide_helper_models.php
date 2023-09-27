@@ -15,8 +15,10 @@ namespace App\Models{
      *
      * @property int $id
      * @property string $question
+     * @property bool $draft
      * @property \Illuminate\Support\Carbon|null $created_at
      * @property \Illuminate\Support\Carbon|null $updated_at
+     * @property-read \App\Models\User|null $createdBy
      * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Vote> $votes
      * @property-read int|null $votes_count
      * @method static \Database\Factories\QuestionFactory factory($count = null, $state = [])
@@ -24,6 +26,7 @@ namespace App\Models{
      * @method static \Illuminate\Database\Eloquent\Builder|Question newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder|Question query()
      * @method static \Illuminate\Database\Eloquent\Builder|Question whereCreatedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|Question whereDraft($value)
      * @method static \Illuminate\Database\Eloquent\Builder|Question whereId($value)
      * @method static \Illuminate\Database\Eloquent\Builder|Question whereQuestion($value)
      * @method static \Illuminate\Database\Eloquent\Builder|Question whereUpdatedAt($value)
@@ -47,6 +50,8 @@ namespace App\Models{
      * @property \Illuminate\Support\Carbon|null $updated_at
      * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
      * @property-read int|null $notifications_count
+     * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Question> $questions
+     * @property-read int|null $questions_count
      * @property-read \Illuminate\Database\Eloquent\Collection<int, \Laravel\Sanctum\PersonalAccessToken> $tokens
      * @property-read int|null $tokens_count
      * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Vote> $votes
