@@ -15,6 +15,7 @@ class QuestionController extends Controller
             'questions' => user()->questions,
         ]);
     }
+
     public function store(): RedirectResponse
     {
         $attributes = request()->validate([
@@ -45,6 +46,29 @@ class QuestionController extends Controller
         $this->authorize('update', $question);
 
         return view('question.edit', compact('question'));
+    }
+
+    public function update(Question $question): RedirectResponse
+    {
+        $this->authorize('update', $question);
+
+        $attributes = request()->validate([
+            'question' => [
+                'required',
+                'min:10',
+                function (string $attribute, mixed $value, Closure $fail) {
+                    if (substr($value, -1) !== '?') {
+                        $fail(
+                            'Are you sure that is a question? It missing the question mark in the end.'
+                        );
+                    }
+                },
+            ],
+        ]);
+
+        $question->update($attributes);
+
+        return back();
     }
 
     public function destroy(Question $question): RedirectResponse
