@@ -18,5 +18,9 @@
                 </div>
             @endforelse
         </div>
+
+        <div class="mt-8">
+            {{ $questions->links() }}
+        </div>
     </x-container>
 </x-app-layout>
