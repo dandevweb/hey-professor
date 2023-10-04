@@ -12,7 +12,7 @@ it('should be able  to update a question', function () {
 
     put(route('question.update', $question), [
         'question' => 'This is a valid question?',
-    ])->assertRedirect();
+    ])->assertRedirect(route('question.index'));
 
     expect($question->fresh()->question)->toBe('This is a valid question?');
 });

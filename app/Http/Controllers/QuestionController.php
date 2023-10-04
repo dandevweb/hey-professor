@@ -68,7 +68,7 @@ class QuestionController extends Controller
 
         $question->update($attributes);
 
-        return back();
+        return to_route('question.index');
     }
 
     public function destroy(Question $question): RedirectResponse
