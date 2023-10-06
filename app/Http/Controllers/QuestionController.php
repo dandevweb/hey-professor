@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Closure;
 use App\Models\Question;
+use App\Rules\SameQuestionRule;
 use Illuminate\View\View;
 use Illuminate\Http\{RedirectResponse};
 
@@ -30,6 +31,7 @@ class QuestionController extends Controller
                         );
                     }
                 },
+                new SameQuestionRule(),
             ],
         ]);
 
