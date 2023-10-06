@@ -13,14 +13,15 @@
             @forelse ($questions as $question)
                 <x-question :question="$question" />
             @empty
-                <div class="p-3 text-black rounded shadow dark:bg-gray-800/50 dark:text-gray-400 shadow-blue-500/50">
+                <div
+                    class="rounded p-3 text-black shadow shadow-blue-500/50 dark:bg-gray-800/50 dark:text-gray-400">
                     No questions yet.
                 </div>
             @endforelse
         </div>
 
         <div class="mt-8">
-            {{ $questions->links() }}
+            {{ $questions->withQueryString()->links() }}
         </div>
     </x-container>
 </x-app-layout>
