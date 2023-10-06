@@ -10,17 +10,34 @@
 
         <div class="space-y-4 dark:text-gray-400">
 
+            <form action="{{ route('dashboard') }}" method="get" class="flex items-center gap-2">
+                @csrf
+                <x-text-input type="search" name="search" value="{{ request('search') }}"
+                    class="w-full" />
+
+                <x-primary-button type="submit">
+                    Search
+                </x-primary-button>
+            </form>
+
             @forelse ($questions as $question)
                 <x-question :question="$question" />
             @empty
-                <div class="p-3 text-black rounded shadow dark:bg-gray-800/50 dark:text-gray-400 shadow-blue-500/50">
-                    No questions yet.
+                <div class="flex flex-col justify-center text-center dark:text-gray-300">
+
+                    <div class="flex justify-center">
+                        <x-draw.searching width="300" />
+                    </div>
+
+                    <div class="mt-6 text-2xl font-bold dark:text-gray-400">
+                        Question not found.
+                    </div>
                 </div>
             @endforelse
         </div>
 
         <div class="mt-8">
-            {{ $questions->links() }}
+            {{ $questions->withQueryString()->links() }}
         </div>
     </x-container>
 </x-app-layout>

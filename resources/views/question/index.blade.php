@@ -142,7 +142,6 @@
                 </x-table>
 
 
-
             </div>
     </x-container>
 </x-app-layout>
